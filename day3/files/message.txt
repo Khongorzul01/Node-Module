@@ -1,0 +1,5 @@
+this is th content of the file 
+We are appending this file synchronously using node.js 
+We are appending this file synchronously using node.js 
+We are appending this file synchronously using node.js 
+We are appending this file synchronously using node.js
