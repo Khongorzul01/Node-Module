@@ -6,16 +6,16 @@ console.log(os.type);
 
 const type = os.type();
 const arch = os.arch();
-// const interface = os.networkInterfaces();
 const home = os.homedir();
 const hostname = os.hostname();
+const reboot = os.uptime();
 
 let arr = {
   type: type,
   arch: arch,
-  //   interface: interface,
   home: home,
   hostname: hostname,
+  reboot: reboot,
 };
 
 http
