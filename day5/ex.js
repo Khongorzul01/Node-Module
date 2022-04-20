@@ -7,6 +7,7 @@ http
   .createServer((request, response) => {
     if (request.url.match(/^\/q/)) {
       const value = request.url.split("=");
+      console.log(value);
       response.writeHead(200, { "Content-Type": "text/html" });
       if (value[1] == "why") {
         response.write("<h1>hi</h1>");
@@ -16,4 +17,4 @@ http
     }
     response.end();
   })
-  .listen(3000);
+  .listen(3008);
