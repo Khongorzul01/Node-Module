@@ -17,10 +17,9 @@ http
           let content = "";
 
           news1.map((e) => {
-            console.log(e);
             content =
               content +
-              `<tr style='border:1px solid black'><td >${e.title}</td> <td><img style=' width: 100px' src="${e.image}"/></td></tr>`;
+              `<tr ><td >${e.title}</td> <td ><img style=' width: 100px' src="${e.image}"/></td></tr>`;
           });
           const result = tableBegin + content + tableEnd;
           res.end(result);
