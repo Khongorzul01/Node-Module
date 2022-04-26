@@ -15,22 +15,34 @@ http
           const tableBegin = "<table>";
           const tableEnd = "</table>";
           let content = "";
-          if (req.url.match(/^\/ghibli/)) {
-            const value = req.url.split("=");
-            console.log(value);
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.writeHead(200, { "Content-Type": "image/jpg" });
+          // console.log(value);
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.writeHead(200, { "Content-Type": "image/jpg" });
 
-            if (value[1] == "people") {
-              news1.map((e) => {
-                console.log(e.films);
-                content =
-                  content +
-                  `<tr ><td >${e.name}</td> <td >${e.age}</td><td >${e.gender}</td><td ><img src="${e.films.image}"/></td></tr>`;
+          if (value[1] == "people") {
+            news1.map((e) => {
+              // console.log(e.films);
+              content += `<tr ><td >${e.name}</td> <td >${e.age}</td><td >${e.gender}</td><td >`;
+              // console.warn(`${e.films}`);
+              https.get(`${e.films}`, (res) => {
+                let imageLink = {};
+                res.on("data", (e) => {
+                  imageLink = e;
+                });
+                res.on("end", () => {
+                  const imgLinks = JSON.parse(
+                    Buffer.concat(imageLink).toString()
+                  );
+                  console.log(imgLinks);
+                });
+                content += `<img src="${res.image}"/></td></tr>`;
+                //   console.warn(res.image);
               });
-              const result = tableBegin + content + tableEnd;
-              res.end(result);
-            }
+            });
+            //   console.warn(content);
+
+            const result = tableBegin + content + tableEnd;
+            res.end(result);
           }
         });
       })
