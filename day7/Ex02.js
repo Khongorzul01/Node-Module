@@ -1,28 +1,40 @@
 const EventEmitter = require("events");
+const https = require("https");
 const http = require("http");
+const fs = require("fs");
+
 const eventEmitter = new EventEmitter();
 
-eventEmitter.on("start", () => {
+eventEmitter.on("films", () => {
   console.log("Хүсэлтийг амжилттай хүлээн авлаа.");
 });
-eventEmitter.emit("start");
-
-
-
-const rootEmitter = new EventEmitter();
 http
-  .createServer((request, response) => {
-    if (request.url === "uyanga") {
-      response.end("<h1>Хүсэлтийг амжилттай хүлээн авлаа.</h1>");
-    }
-    if (request.url.match(/^\/tiktik/)) return tiktik(request, response);
-   
-  })
-  .listen(3000);
-  
-function tiktik(req, res) {
- const message = req.url.split("?data=")[1];
-  rootEmitter.emit("message", message);
-  res.end();
+  .createServer(function (req, res) {
+    eventEmitter.emit("films");
+    if (req.url === "/films") {
+      https
+        .get("https://ghibliapi.herokuapp.com/films", (response) => {
+          let data = [];
+          response.on("data", (news) => {
+            data.push(news);
+          });
+          response.on("end", () => {
+            const news1 = JSON.parse(Buffer.concat(data).toString());
+            console.log(news1);
 
-}
+            fs.writeFile("films.json", JSON.stringify(news1), (err) => {
+              if (err) {
+                throw err;
+              } else {
+                res.write("<h1>checked</h1>");
+              }
+            });
+          });
+        })
+        .on("error", (err) => {
+          console.log("Error:" + err.message);
+        });
+      res.end("saved");
+    }
+  })
+  .listen(3001);
