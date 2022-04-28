@@ -1,20 +1,22 @@
 const request = require("request");
 const EventEmitter = require("events");
 const http = require("http");
-const fse = require("fs-extra");
+const fs = require("fs-extra");
 
 const eventEmitter = new EventEmitter();
 
 eventEmitter.on("films-show", () => {
-  request(
-    "https://ghibliapi.herokuapp.com/films",
-    function (err, response, body) {
-      fse.writeJson("films.json", { name: "fs-extra" }, (err) => {
-        if (err) return console.error(err);
-        console.log("success!");
-      });
-    }
-  );
+  request("https://ghibliapi.herokuapp.com/films", (err, response, body) => {
+    const data = JSON.parse(body);
+    console.log(data);
+    // fs.writeJson("films.json", { name: "fs-extra" })
+    //   .then(() => {
+    //     console.log("success!");
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+  });
 });
 
 http

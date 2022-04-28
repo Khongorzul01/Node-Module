@@ -1,12 +1,11 @@
 const request = require("request");
 
 function shalgah(str) {
-  request(
-    "https://ghibliapi.herokuapp.com/films",
-    function (error, response, body) {
-      console.log(str);
-    }
-  );
+  request("https://ghibliapi.herokuapp.com/films", (error, response, body) => {
+    const data = JSON.parse(body);
+    console.log(data);
+  });
 }
-console.log(request);
+
+shalgah();
 module.exports = shalgah;
