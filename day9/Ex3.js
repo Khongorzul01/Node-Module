@@ -7,6 +7,7 @@ app.get("/get-data", (req, res) => {
   console.log(data);
   data.on("open", function () {
     data.pipe(res);
+    console.log(res);
   });
 });
 app.listen(3000);
