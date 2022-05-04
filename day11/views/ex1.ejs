@@ -1,0 +1,21 @@
+<table>
+  <tbody style="display: flex; flex-direction: row">
+    <% foods.map((item)=>{%>
+    <tr
+      style="
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        margin: 5px;
+      "
+    >
+      <td style="border: 1px solid orange"><%=item.name%></td>
+
+      <td style="border: 1px solid orange">
+        <img width="200" height="200" alt="" src="<%=item.image %>" />
+      </td>
+      <%});%>
+    </tr>
+  </tbody>
+</table>
