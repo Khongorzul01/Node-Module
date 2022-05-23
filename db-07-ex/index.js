@@ -71,6 +71,39 @@ app.get("/managers/salary", (req, res) => {
   );
 });
 
+app.put("/departments", (req, res) => {
+  connection.query(`lock tables departments read;`);
+  connection.query(`select count(*) from departments;`, (err, rows, fields) => {
+    if (!err) {
+      res.send(rows);
+    } else {
+      console.log(err);
+      res.send(err);
+    }
+  });
+});
+app.get("/dept_emp", (req, res) => {
+  connection.query(`select count(*) from dept_emp;`, (err, rows, fields) => {
+    if (!err) {
+      res.send(rows);
+    } else {
+      console.log(err);
+      res.send(err);
+    }
+  });
+});
+
+app.get("/unlock", (req, res) => {
+  connection.query(`select count(*) from dept_emp;`, (err, rows, fields) => {
+    if (!err) {
+      res.send(rows);
+    } else {
+      console.log(err);
+      res.send(err);
+    }
+  });
+});
+
 app.listen(3000, () => {
   console.log("App" + 3000);
 });
